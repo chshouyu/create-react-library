@@ -1,0 +1,4 @@
+{
+  "src/**/*.{ts,tsx,js}": ["eslint --fix", "git add"],
+  "*.css": ["prettier --write", "git add"]
+}

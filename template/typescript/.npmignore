@@ -1,0 +1,7 @@
+.vscode/
+src/
+.eslintignore
+.eslintrc.js
+.lintstagedrc
+.prettierrc
+rollup.config.js

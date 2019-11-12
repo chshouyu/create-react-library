@@ -1,16 +1,16 @@
-import typescript from 'rollup-plugin-typescript2'
-import commonjs from 'rollup-plugin-commonjs'
-import external from 'rollup-plugin-peer-deps-external'
-// import postcss from 'rollup-plugin-postcss-modules'
-import postcss from 'rollup-plugin-postcss'
-import resolve from 'rollup-plugin-node-resolve'
-import url from 'rollup-plugin-url'
-import svgr from '@svgr/rollup'
+import resolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
+import typescript from 'rollup-plugin-typescript2';
+import postcss from 'rollup-plugin-postcss';
+import atImport from 'postcss-import';
+import cssvariables from 'postcss-css-variables';
+import nested from 'postcss-nested';
+import external from 'rollup-plugin-peer-deps-external';
 
-import pkg from './package.json'
+import pkg from './package.json';
 
 export default {
-  input: 'src/index.tsx',
+  input: './src/index.tsx',
   output: [
     {
       file: pkg.main,
@@ -27,16 +27,15 @@ export default {
   ],
   plugins: [
     external(),
-    postcss({
-      modules: true
-    }),
-    url({ exclude: ['**/*.svg'] }),
-    svgr(),
     resolve(),
+    commonjs(),
+    postcss({
+      extract: true,
+      plugins: [atImport(), nested(), cssvariables()]
+    }),
     typescript({
       rollupCommonJSResolveHack: true,
       clean: true
-    }),
-    commonjs()
+    })
   ]
-}
+};
